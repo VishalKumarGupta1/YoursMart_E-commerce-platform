@@ -1,0 +1,40 @@
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+const ProductCard = ({ product,handleGetProductDeatil }) => {
+  return (
+    <div className="cursor-pointer" onClick={()=>handleGetProductDeatil(product?._id)}>
+      <Card  sx={{ maxWidth: 345 }}>
+        <CardMedia
+          component="img"
+          alt="green iguana"
+          height="140"
+          image={product.image}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {product.title}
+          </Typography>
+          <Typography>
+            {product.salePrice} {product.price}
+          </Typography>
+          <Typography>
+            {product.brand} {product.category}
+          </Typography>
+          <Typography>
+            {product.totalStock > 0 ? product.totalStock : "Out of Stock"}{" "}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small">Add to cart</Button>
+        </CardActions>
+      </Card>
+    </div>
+  );
+};
+
+export default ProductCard;
