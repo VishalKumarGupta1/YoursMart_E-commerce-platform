@@ -5,32 +5,36 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-const ProductCard = ({ product,handleGetProductDeatil }) => {
+const ProductCard = ({ product, handleGetProductDeatil, handleAddToCart }) => {
   return (
-    <div className="cursor-pointer" onClick={()=>handleGetProductDeatil(product?._id)}>
-      <Card  sx={{ maxWidth: 345 }}>
-        <CardMedia
-          component="img"
-          alt="green iguana"
-          height="140"
-          image={product.image}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {product.title}
-          </Typography>
-          <Typography>
-            {product.salePrice} {product.price}
-          </Typography>
-          <Typography>
-            {product.brand} {product.category}
-          </Typography>
-          <Typography>
-            {product.totalStock > 0 ? product.totalStock : "Out of Stock"}{" "}
-          </Typography>
-        </CardContent>
+    <div className="cursor-pointer">
+      <Card sx={{ maxWidth: 345 }}>
+        <div onClick={() => handleGetProductDeatil(product?._id)}>
+          <CardMedia
+            component="img"
+            alt="green iguana"
+            height="140"
+            image={product.image}
+          />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {product.title}
+            </Typography>
+            <Typography>
+              {product.salePrice} {product.price}
+            </Typography>
+            <Typography>
+              {product.brand} {product.category}
+            </Typography>
+            <Typography>
+              {product.totalStock > 0 ? product.totalStock : "Out of Stock"}{" "}
+            </Typography>
+          </CardContent>
+        </div>
         <CardActions>
-          <Button size="small">Add to cart</Button>
+          <Button size="small" onClick={() => handleAddToCart(product?._id)}>
+            Add to cart
+          </Button>
         </CardActions>
       </Card>
     </div>

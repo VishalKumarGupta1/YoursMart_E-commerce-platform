@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -23,18 +23,24 @@ import {
   ShoppingCart as CartIcon,
 } from "@mui/icons-material";
 import { Link } from "react-router";
+import CartDrawer from "./CartDrawer";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCartItems } from "../../store/shop/cart-slice";
 
 export default function ShoppingHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [profileMenuAnchor, setProfileMenuAnchor] = useState(null);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const { cartItems } = useSelector((state) => state.shopCart);
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    dispatch(fetchCartItems(user?._id));
+  }, [dispatch]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
   };
 
   const handleProfileMenuOpen = (event) => {
@@ -45,6 +51,18 @@ export default function ShoppingHeader() {
   const handleProfileMenuClose = () => {
     setIsProfileMenuOpen(false);
     setProfileMenuAnchor(null);
+  };
+
+  const [CartDrawerOpen, setCartDrawerOpen] = useState(false);
+
+  const toggleDrawer = (isOpen) => (event) => {
+    if (
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+    setCartDrawerOpen(isOpen);
   };
 
   return (
@@ -144,7 +162,7 @@ export default function ShoppingHeader() {
               gap: 2,
             }}
           >
-            <IconButton color="inherit" component={Link} to="/shop/checkout">
+            <IconButton color="inherit" onClick={toggleDrawer(true)}>
               <CartIcon />
             </IconButton>
             <IconButton color="inherit" onClick={handleProfileMenuOpen}>
@@ -188,6 +206,12 @@ export default function ShoppingHeader() {
           Logout
         </MenuItem>
       </Menu>
+
+      <CartDrawer
+        cartItems={cartItems}
+        open={CartDrawerOpen}
+        toggleDrawer={toggleDrawer}
+      />
 
       {/* Drawer for Mobile Menu */}
       <Drawer
@@ -233,7 +257,7 @@ export default function ShoppingHeader() {
               mt: 3,
             }}
           >
-            <IconButton color="inherit" component={Link} to="/shop/checkout">
+            <IconButton color="inherit" onClick={toggleDrawer(true)}>
               <CartIcon sx={{ color: "#fff" }} />
             </IconButton>
             <IconButton color="inherit" onClick={handleProfileMenuOpen}>

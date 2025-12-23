@@ -24,7 +24,9 @@ import PersonIcon from "@mui/icons-material/Person";
 import {
   fetchAllFilteredProducts,
   fetchProductsDetails,
+  setproductDetails,
 } from "../../store/shop/product-slice";
+import { addToCart, fetchCartItems } from "../../store/shop/cart-slice";
 
 const Listing = () => {
   const [sortMenuAnchor, setsortMenuAnchor] = useState(null);
@@ -40,6 +42,8 @@ const Listing = () => {
   const { isLoading, productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+
+  const { user } = useSelector((state) => state.auth);
 
   const handleSortMenuOpen = (event) => {
     setsortMenuAnchor(event.currentTarget);
@@ -87,9 +91,23 @@ const Listing = () => {
     });
   };
 
+  const handleAddToCart = (id) => {
+    dispatch(addToCart({ userId: user?._id, productId: id, quantity: 1 })).then(
+      (res) => {
+        if (res?.payload?.success) {
+          dispatch(fetchCartItems(user?._id));
+          toast.success(res?.payload?.message);
+        } else {
+          toast.error(res?.payload?.message);
+        }
+      }
+    );
+  };
+
   const handleOpen = () => setproductPageDetailOpen(true);
   const handleClose = () => {
     setproductPageDetailOpen(false);
+    dispatch(setproductDetails);
   };
 
   return (
@@ -127,6 +145,7 @@ const Listing = () => {
               handleGetProductDeatil={handleGetProductDeatil}
               key={product._id}
               product={product}
+              handleAddToCart={handleAddToCart}
             />
           ))}
         </div>
@@ -172,7 +191,7 @@ const Listing = () => {
         </div>
       )}
 
-      {/* add product dialog */}
+      {/* onclick  product dialog open */}
       <Dialog
         open={productPageDetailOpen}
         onClose={handleClose}
@@ -324,6 +343,7 @@ const Listing = () => {
                 backgroundColor: "#000",
                 "&:hover": { backgroundColor: "#333" },
               }}
+              onClick={() => handleAddToCart(productDetails?._id)}
             >
               Add to Cart
             </Button>
