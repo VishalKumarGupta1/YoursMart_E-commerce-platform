@@ -22,7 +22,7 @@ import {
   AccountCircle as AccountIcon,
   ShoppingCart as CartIcon,
 } from "@mui/icons-material";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import CartDrawer from "./CartDrawer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems } from "../../store/shop/cart-slice";
@@ -34,6 +34,7 @@ export default function ShoppingHeader() {
   const { cartItems } = useSelector((state) => state.shopCart);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchCartItems(user?._id));
@@ -63,6 +64,17 @@ export default function ShoppingHeader() {
       return;
     }
     setCartDrawerOpen(isOpen);
+  };
+
+  const handleNavigateToListingPage = (text, type) => {
+    const currentFilters = {
+      category: [],
+      brand: [],
+    };
+    // Set the clicked filter
+    currentFilters[type] = [text];
+    sessionStorage.setItem("filters", JSON.stringify(currentFilters));
+    navigate("/shop/listing");
   };
 
   return (
@@ -111,6 +123,24 @@ export default function ShoppingHeader() {
             >
               Home
             </Button>
+            {["Men", "Women", "Kids", "Footwear", "Accessories"].map((text) => (
+              <Button
+                color="inherit"
+                onClick={() => handleNavigateToListingPage(text, "category")}
+                sx={{ textTransform: "capitalize", fontSize: "17px" }}
+              >
+                {text}
+              </Button>
+            ))}
+
+            {/* <Button
+              color="inherit"
+              component={Link}
+              to="/shop/home"
+              sx={{ textTransform: "capitalize", fontSize: "17px" }}
+            >
+              Home
+            </Button>
             <Button
               color="inherit"
               component={Link}
@@ -151,7 +181,7 @@ export default function ShoppingHeader() {
               sx={{ textTransform: "capitalize", fontSize: "17px" }}
             >
               Accessories
-            </Button>
+            </Button> */}
           </Box>
 
           {/* Right Side - Nav Links + Icons (desktop only) */}

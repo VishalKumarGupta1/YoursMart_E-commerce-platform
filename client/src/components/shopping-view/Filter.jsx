@@ -10,6 +10,7 @@ import Chip from "@mui/material/Chip";
 import { brands, categories } from "../../Utility/Constant";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
+import { useLocation } from "react-router-dom";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -33,9 +34,18 @@ function getStyles(name, category, theme) {
 const ProductFilter = ({ filter, setFilter }) => {
   const theme = useTheme();
 
+  const location = useLocation();
+
   React.useEffect(() => {
     sessionStorage.setItem("filters", JSON.stringify(filter));
   }, [filter]);
+
+  // React.useEffect(() => {
+  //   const storedFilters = sessionStorage.getItem("filters");
+  //   if (storedFilters) {
+  //     setFilter(JSON.parse(storedFilters));
+  //   }
+  // }, [location.pathname]);
 
   const handleFilterChange = (key) => (event) => {
     const {
