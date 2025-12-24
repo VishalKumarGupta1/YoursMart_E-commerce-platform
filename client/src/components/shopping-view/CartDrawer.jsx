@@ -7,8 +7,11 @@ import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
 import CartItemContent from "./CartItemContent";
+import { Link, useNavigate } from "react-router";
 
 const CartDrawer = ({ cartItems, open, toggleDrawer }) => {
+  const navigate = useNavigate();
+
   // Calculate subtotal
   const subtotal =
     cartItems?.items?.reduce(
@@ -18,6 +21,11 @@ const CartDrawer = ({ cartItems, open, toggleDrawer }) => {
 
   const shipping = 99; // dummy price
   const total = subtotal + shipping;
+
+  const handleCheckout = () => {
+    navigate("/shop/checkout");
+    toggleDrawer(false);
+  };
 
   return (
     <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
@@ -75,7 +83,15 @@ const CartDrawer = ({ cartItems, open, toggleDrawer }) => {
             <Typography fontWeight="bold">₹{total}</Typography>
           </Box>
 
-          <Button variant="contained" color="primary" fullWidth size="large">
+          <Button
+            variant="contained"
+            color="primary"
+            fullWidth
+            size="large"
+            onClick={() => {
+              handleCheckout();
+            }}
+          >
             Checkout
           </Button>
         </Box>
