@@ -27,7 +27,7 @@ const Account = () => {
             {/* Tab Content */}
           </Tabs>
           {tabValue === "orders" && <ShoppingOrders />}
-          {tabValue === "address" && <Address />}
+          {tabValue === "address" && <Address isCheckout={false} />}
         </div>
       </div>
     </div>

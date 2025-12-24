@@ -10,7 +10,12 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const AddressCard = ({ address, handleDeleteAddress, handleEditAddress }) => {
+const AddressCard = ({
+  address,
+  handleDeleteAddress,
+  handleEditAddress,
+  isCheckout,
+}) => {
   return (
     <Card
       sx={{
@@ -23,24 +28,26 @@ const AddressCard = ({ address, handleDeleteAddress, handleEditAddress }) => {
       }}
     >
       {/* Edit & Delete Icons */}
-      <Stack
-        direction="row"
-        spacing={1}
-        sx={{ position: "absolute", top: 8, right: 8 }}
-      >
-        <IconButton
-          onClick={() => handleEditAddress(address)}
-          sx={{ color: "grey.500" }}
+      {!isCheckout && (
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{ position: "absolute", top: 8, right: 8 }}
         >
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          onClick={() => handleDeleteAddress(address._id)}
-          sx={{ color: "grey.500" }}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Stack>
+          <IconButton
+            onClick={() => handleEditAddress(address)}
+            sx={{ color: "grey.500" }}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            onClick={() => handleDeleteAddress(address._id)}
+            sx={{ color: "grey.500" }}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Stack>
+      )}
 
       <CardContent>
         <Typography variant="h6" gutterBottom>

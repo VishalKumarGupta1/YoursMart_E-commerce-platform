@@ -26,6 +26,8 @@ import { Link, useNavigate } from "react-router";
 import CartDrawer from "./CartDrawer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems } from "../../store/shop/cart-slice";
+import { logoutUser } from "../../store/auth-slice";
+import { toast } from "react-toastify";
 
 export default function ShoppingHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -64,6 +66,16 @@ export default function ShoppingHeader() {
       return;
     }
     setCartDrawerOpen(isOpen);
+  };
+
+  const handlelogout = () => {
+    dispatch(logoutUser()).then((res) => {
+      if (res?.payload?.success) {
+        toast.success(res?.payload?.message);
+      } else {
+        toast.error(res?.payload?.message);
+      }
+    });
   };
 
   const handleNavigateToListingPage = (text, type) => {
@@ -232,7 +244,7 @@ export default function ShoppingHeader() {
         >
           View Account
         </MenuItem>
-        <MenuItem onClick={handleProfileMenuClose} component={Link}>
+        <MenuItem onClick={() => handlelogout()} component={Link}>
           Logout
         </MenuItem>
       </Menu>

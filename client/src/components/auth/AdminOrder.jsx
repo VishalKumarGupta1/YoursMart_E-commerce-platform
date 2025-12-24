@@ -16,6 +16,7 @@ import {
   DialogContent,
   Typography,
   Box,
+  TextField,
 } from "@mui/material";
 
 // 🔹 Dummy Data
@@ -51,13 +52,19 @@ const getStatusColor = (status) => {
   }
 };
 
-const ShoppingOrders = () => {
+const AdminOrder = () => {
+  const [orderStatus, setOrderStatus] = useState("");
   const [open, setOpen] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
   const handleOpenDetails = (order) => {
     setSelectedOrder(order);
+    setOrderStatus(order.orderStatus); // sync dropdown
     setOpen(true);
+  };
+
+  const handleStatusChange = (e) => {
+    setOrderStatus(e.target.value);
   };
 
   const handleClose = () => {
@@ -65,10 +72,26 @@ const ShoppingOrders = () => {
     setSelectedOrder(null);
   };
 
+  const handleUpdateOrderStatus = () => {
+    if (!selectedOrder) return;
+
+    const updatedData = {
+      orderId: selectedOrder._id,
+      status: orderStatus,
+    };
+
+    console.log("Updating Order Status:", updatedData);
+
+    // 🔹 later you can dispatch API / redux action here
+    // dispatch(updateOrderStatus(updatedData))
+
+    // temporary UX feedback
+    alert("Order status updated successfully!");
+  };
   return (
     <Box p={3}>
       <Card>
-        <CardHeader title="Order History" />
+        <CardHeader title=" All Order" />
         <CardContent>
           <TableContainer>
             <Table>
@@ -219,6 +242,53 @@ const ShoppingOrders = () => {
               <Typography>
                 <b>Notes:</b> Please deliver in the evening
               </Typography>
+
+              <Box
+                sx={{
+                  mt: 3,
+                  p: 2,
+                  borderRadius: 1,
+                }}
+              >
+                <Typography variant="h6" sx={{ color: "black", mb: 2 }}>
+                  Update Order Status
+                </Typography>
+
+                <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
+                  <TextField
+                    select
+                    label="Order Status"
+                    value={orderStatus}
+                    onChange={handleStatusChange}
+                    SelectProps={{ native: true }}
+                    sx={{
+                      flex: 1,
+                      backgroundColor: "#fff",
+                      borderRadius: 1,
+                    }}
+                  >
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="rejected">Rejected</option>
+                  </TextField>
+
+                  <Button
+                    variant="contained"
+                    disabled={orderStatus === selectedOrder?.orderStatus}
+                    sx={{
+                      backgroundColor: "#fff",
+                      color: "#000",
+                      px: 3,
+                      "&:hover": { backgroundColor: "#fff" },
+                    }}
+                    onClick={handleUpdateOrderStatus}
+                  >
+                    Update
+                  </Button>
+                </Box>
+              </Box>
             </>
           )}
         </DialogContent>
@@ -227,4 +297,4 @@ const ShoppingOrders = () => {
   );
 };
 
-export default ShoppingOrders;
+export default AdminOrder;

@@ -16,7 +16,7 @@ import {
 } from "../../store/shop/address-slice";
 import AddressCard from "./AddressCard";
 
-const Address = () => {
+const Address = ({ isCheckout="false" }) => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const { isLoading, addressList } = useSelector((state) => state.shopAddress);
@@ -122,90 +122,93 @@ const Address = () => {
             address={item}
             handleDeleteAddress={handleDeleteAddress}
             handleEditAddress={handleEditAddress}
+            isCheckout={isCheckout}
           />
         ))}
       </div>
-      <Box sx={{ maxWidth: 500, mx: "auto", p: 2 }}>
-        <Typography variant="h5" mb={3}>
-          {currentEditedId ? "Edit" : "Add"} Address
-        </Typography>
-        <form onSubmit={handleSubmit}>
-          <TextField
-            label="Address"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            fullWidth
-            required
-            margin="normal"
-          />
-          <TextField
-            label="City"
-            name="city"
-            value={formData.city}
-            onChange={handleChange}
-            fullWidth
-            required
-            margin="normal"
-          />
-          <TextField
-            label="Phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            fullWidth
-            required
-            margin="normal"
-          />
-          <TextField
-            label="Pincode"
-            name="pincode"
-            value={formData.pincode}
-            onChange={handleChange}
-            fullWidth
-            required
-            margin="normal"
-          />
-          <TextField
-            label="Notes"
-            name="notes"
-            value={formData.notes}
-            onChange={handleChange}
-            fullWidth
-            multiline
-            rows={3}
-            margin="normal"
-          />
-          <DialogActions sx={{ px: 0, mt: 2 }}>
-            <Button
-              type="submit"
-              variant="outlined"
-              sx={{ color: "black", border: " 1px solid black" }}
+      {!isCheckout && (
+        <Box sx={{ maxWidth: 500, mx: "auto", p: 2 }}>
+          <Typography variant="h5" mb={3}>
+            {currentEditedId ? "Edit" : "Add"} Address
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            <TextField
+              label="Address"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              fullWidth
+              required
+              margin="normal"
+            />
+            <TextField
+              label="City"
+              name="city"
+              value={formData.city}
+              onChange={handleChange}
+              fullWidth
+              required
+              margin="normal"
+            />
+            <TextField
+              label="Phone"
+              name="phone"
+              value={formData.phone}
+              onChange={handleChange}
+              fullWidth
+              required
+              margin="normal"
+            />
+            <TextField
+              label="Pincode"
+              name="pincode"
+              value={formData.pincode}
+              onChange={handleChange}
+              fullWidth
+              required
+              margin="normal"
+            />
+            <TextField
+              label="Notes"
+              name="notes"
+              value={formData.notes}
+              onChange={handleChange}
+              fullWidth
+              multiline
+              rows={3}
+              margin="normal"
+            />
+            <DialogActions sx={{ px: 0, mt: 2 }}>
+              <Button
+                type="submit"
+                variant="outlined"
+                sx={{ color: "black", border: " 1px solid black" }}
+              >
+                Save Address
+              </Button>
+            </DialogActions>
+          </form>
+          {/* loader  */}
+          {isLoading && (
+            <div
+              style={{
+                position: "fixed",
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                backgroundColor: "rgba(216, 214, 214, 0.4)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                zIndex: 1301,
+              }}
             >
-              Save Address
-            </Button>
-          </DialogActions>
-        </form>
-        {/* loader  */}
-        {isLoading && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(216, 214, 214, 0.4)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              zIndex: 1301,
-            }}
-          >
-            <img src="/loader.gif" height={50} width={50} alt="loading"></img>
-          </div>
-        )}
-      </Box>
+              <img src="/loader.gif" height={50} width={50} alt="loading"></img>
+            </div>
+          )}
+        </Box>
+      )}
     </>
   );
 };
