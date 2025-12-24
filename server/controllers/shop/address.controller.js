@@ -41,7 +41,7 @@ export const fetchAllAddress = asynchandler(async (req, res) => {
 
 export const editAddress = asynchandler(async (req, res) => {
   const { userId, addressId } = req.params;
-  const { formData } = req.body;
+  const formData = req.body;
   if (!userId || !addressId) {
     throw new ApiError(400, "userId and addressId fields are required");
   }
