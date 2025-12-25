@@ -22,7 +22,7 @@ import {
   AccountCircle as AccountIcon,
   ShoppingCart as CartIcon,
 } from "@mui/icons-material";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate, useSearchParams } from "react-router";
 import CartDrawer from "./CartDrawer";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems } from "../../store/shop/cart-slice";
@@ -37,6 +37,8 @@ export default function ShoppingHeader() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const loaction = useLocation();
+  const [searchParams, setsearchParams] = useSearchParams();
 
   useEffect(() => {
     dispatch(fetchCartItems(user?._id));
@@ -86,7 +88,9 @@ export default function ShoppingHeader() {
     // Set the clicked filter
     currentFilters[type] = [text];
     sessionStorage.setItem("filters", JSON.stringify(currentFilters));
-    navigate("/shop/listing");
+    loaction.pathname.includes("listing")
+      ? setsearchParams(new URLSearchParams(`?category=${text}`))
+      : navigate("/shop/listing");
   };
 
   return (
@@ -134,6 +138,14 @@ export default function ShoppingHeader() {
               sx={{ textTransform: "capitalize", fontSize: "17px" }}
             >
               Home
+            </Button>
+            <Button
+              color="inherit"
+              component={Link}
+              to="/shop/listing"
+              sx={{ textTransform: "capitalize", fontSize: "17px" }}
+            >
+              Products
             </Button>
             {["Men", "Women", "Kids", "Footwear", "Accessories"].map(
               (text, index) => (

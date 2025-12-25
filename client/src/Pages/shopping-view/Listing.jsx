@@ -42,8 +42,12 @@ const Listing = () => {
   const { isLoading, productList, productDetails } = useSelector(
     (state) => state.shopProducts
   );
+  const categorySearchParams = searchParams.get("category");
 
   const { user } = useSelector((state) => state.auth);
+  const { cartItems } = useSelector((state) => state.shopCart);
+
+  // console.log(cartItems,"cartItems");
 
   const handleSortMenuOpen = (event) => {
     setsortMenuAnchor(event.currentTarget);
@@ -63,6 +67,10 @@ const Listing = () => {
   };
 
   useEffect(() => {
+    setFilter(JSON.parse(sessionStorage.getItem("filters")));
+  }, [categorySearchParams]);
+
+  useEffect(() => {
     if (filter !== null && sort !== null)
       dispatch(
         fetchAllFilteredProducts({ filterParams: filter, sortParams: sort })
@@ -74,7 +82,7 @@ const Listing = () => {
       const createQueryString = createSearchParamsHelper(filter);
       setSearchParams(new URLSearchParams(createQueryString));
     }
-  }, [filter]);
+  }, [filter, categorySearchParams]);
 
   const handleGetProductDeatil = (id) => {
     console.log(id);
@@ -91,7 +99,24 @@ const Listing = () => {
     });
   };
 
-  const handleAddToCart = (id) => {
+  const handleAddToCart = (id, gettotalStock) => {
+    let getCartItems = cartItems.items || [];
+
+    if (getCartItems.length) {
+      const indexOfCurrentItem = getCartItems.findIndex(
+        (item) => item.productId === id
+      );
+      if (indexOfCurrentItem > -1) {
+        const getQuantity = getCartItems[indexOfCurrentItem].quantity;
+        if (getQuantity + 1 > gettotalStock) {
+          toast.error(
+            `Only ${getQuantity} quantity can be added for this product`
+          );
+          return;
+        }
+      }
+    }
+
     dispatch(addToCart({ userId: user?._id, productId: id, quantity: 1 })).then(
       (res) => {
         if (res?.payload?.success) {
@@ -343,7 +368,10 @@ const Listing = () => {
                 backgroundColor: "#000",
                 "&:hover": { backgroundColor: "#333" },
               }}
-              onClick={() => handleAddToCart(productDetails?._id)}
+              disabled={productDetails?.totalStock === 0}
+              onClick={() =>
+                handleAddToCart(productDetails?._id, productDetails?.totalStock)
+              }
             >
               Add to Cart
             </Button>

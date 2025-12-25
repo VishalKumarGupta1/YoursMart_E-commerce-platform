@@ -8,6 +8,18 @@ export function CheckAuth({ isLoading, isAuthenticated, user, children }) {
     return null; // or a spinner
   }
 
+  if (location.pathname == "/") {
+    if (!isAuthenticated) {
+      return <Navigate to="/auth/login" />;
+    } else {
+      if (user?.role === "admin") {
+        return <Navigate to="/admin/dashboard" />;
+      } else {
+        return <Navigate to="/shop/home" />;
+      }
+    }
+  }
+
   if (
     !isAuthenticated &&
     !(

@@ -27,12 +27,19 @@ const ProductCard = ({ product, handleGetProductDeatil, handleAddToCart }) => {
               {product.brand} {product.category}
             </Typography>
             <Typography>
-              {product.totalStock > 0 ? product.totalStock : "Out of Stock"}{" "}
+              {product.totalStock === 0 && "Out of Stock"}{" "}
+              {product.totalStock < 10 &&
+                product.totalStock > 0 &&
+                `${product.totalStock} item left`}
             </Typography>
           </CardContent>
         </div>
         <CardActions>
-          <Button size="small" onClick={() => handleAddToCart(product?._id)}>
+          <Button
+            size="small"
+            onClick={() => handleAddToCart(product?._id,product?.totalStock)}
+            disabled={product.totalStock === 0}
+          >
             Add to cart
           </Button>
         </CardActions>

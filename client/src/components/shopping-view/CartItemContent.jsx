@@ -14,6 +14,10 @@ const CartItemContent = ({ item }) => {
   const totalPrice = item.salePrice * item.quantity;
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+  const { cartItems } = useSelector((state) => state.shopCart);
+  const { isLoading, productList, productDetails } = useSelector(
+    (state) => state.shopProducts
+  );
 
   const handleDeleteCartItem = (id) => {
     dispatch(deleteCartItems({ userId: user._id, productId: id })).then(
@@ -28,6 +32,28 @@ const CartItemContent = ({ item }) => {
   };
 
   const handleUpdateQuantity = (item, type) => {
+    if (type === "plus") {
+      let getCartItems = cartItems.items || [];
+
+      if (getCartItems.length) {
+        const indexOfCurrentCart = getCartItems.findIndex(
+          (data) => data.productId === item?.productId
+        );
+        const getCurrentProductIndex = productList.findIndex(
+          (product) => product._id === item?.productId
+        );
+        const gettotalstock = productList[getCurrentProductIndex].totalStock;
+        if (indexOfCurrentCart > -1) {
+          const getQuantity = getCartItems[indexOfCurrentCart].quantity;
+          if (getQuantity + 1 > gettotalstock) {
+            toast.error(
+              `Only ${getQuantity} quantity can be added for this product`
+            );
+            return;
+          }
+        }
+      }
+    }
     dispatch(
       updateCartQuantity({
         userId: user?._id,
