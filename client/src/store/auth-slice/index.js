@@ -100,6 +100,38 @@ export const changePassword = createAsyncThunk(
   }
 );
 
+export const forgetPassword = createAsyncThunk(
+  "auth/forgetPassword",
+  async ({ email }, { rejectWithValue }) => {
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/user/password/forget`,
+        { email },
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async ({ token, newPassword }, { rejectWithValue }) => {
+    try {
+      const res = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/user/password/reset/${token}`,
+        { newPassword },
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -183,6 +215,24 @@ const authSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(changePassword.rejected, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(forgetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(forgetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
         state.isLoading = false;
       });
   },

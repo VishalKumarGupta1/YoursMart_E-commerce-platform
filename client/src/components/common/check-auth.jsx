@@ -24,7 +24,8 @@ export function CheckAuth({ isLoading, isAuthenticated, user, children }) {
     !isAuthenticated &&
     !(
       location.pathname.includes("/login") ||
-      location.pathname.includes("/register")
+      location.pathname.includes("/register") ||
+      location.pathname.includes("/reset")
     )
   ) {
     return <Navigate to="/auth/login" />;
