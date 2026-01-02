@@ -84,6 +84,22 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
+export const changePassword = createAsyncThunk(
+  "auth/change-password",
+  async ({ oldPassword, newPassword }, { rejectWithValue }) => {
+    try {
+      const res = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/user/change-password`,
+        { oldPassword, newPassword },
+        { withCredentials: true }
+      );
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -152,15 +168,23 @@ const authSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = null
+        state.user = null;
         state.isAuthenticated = false;
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
+      })
+      .addCase(changePassword.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.isLoading = false;
+      })
+      .addCase(changePassword.rejected, (state, action) => {
+        state.isLoading = false;
       });
-
   },
 });
 

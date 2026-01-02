@@ -206,7 +206,7 @@ export const changeCurrentpassword = asynchandler(async (req, res) => {
 
   return res
     .status(200)
-    .json(new ApiResponse(200, "password changed successfully"));
+    .json(new ApiResponse(200, {}, "password changed successfully"));
 });
 
 export const forgetPassword = asynchandler(async (req, res, next) => {

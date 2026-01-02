@@ -22,6 +22,7 @@ import { checkAuth } from "./store/auth-slice/index.js";
 import PaypalReturnPage from "./Pages/shopping-view/paypal-return.jsx";
 import PaypalCancelPage from "./Pages/shopping-view/paypal-cancel.jsx";
 import PaypalSuccessPage from "./Pages/shopping-view/payment-success.jsx";
+import Viewprofile from "./Pages/shopping-view/Viewprofile.jsx";
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector(
@@ -120,6 +121,7 @@ function App() {
             <Route path="paypal-return" element={<PaypalReturnPage />} />
             <Route path="paypal-cancel" element={<PaypalCancelPage />} />
             <Route path="payment-success" element={<PaypalSuccessPage />} />
+            <Route path="view-profile" element={<Viewprofile />} />
           </Route>
           <Route path="*" element={<Notfound />} />
           <Route path="/unauth-page" element={<UnauthPage />} />

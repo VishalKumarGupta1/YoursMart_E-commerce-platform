@@ -248,7 +248,7 @@ export default function ShoppingHeader() {
         <MenuItem
           onClick={handleProfileMenuClose}
           component={Link}
-          to="/myProfile"
+          to="/shop/view-profile"
         >
           View Profile
         </MenuItem>
