@@ -159,56 +159,14 @@ export default function ShoppingHeader() {
                 </Button>
               )
             )}
-
-            {/* <Button
-              color="inherit"
-              component={Link}
-              to="/shop/home"
-              sx={{ textTransform: "capitalize", fontSize: "17px" }}
-            >
-              Home
-            </Button>
             <Button
               color="inherit"
               component={Link}
-              to="/Products"
+              to="/shop/search"
               sx={{ textTransform: "capitalize", fontSize: "17px" }}
             >
-              Men
+              Search
             </Button>
-
-            <Button
-              color="inherit"
-              component={Link}
-              to="/Login"
-              sx={{ textTransform: "capitalize", fontSize: "17px" }}
-            >
-              Women
-            </Button>
-            <Button
-              color="inherit"
-              component={Link}
-              to="/Signup"
-              sx={{ textTransform: "capitalize", fontSize: "17px" }}
-            >
-              Kids
-            </Button>
-            <Button
-              color="inherit"
-              component={Link}
-              to="/Login"
-              sx={{ textTransform: "capitalize", fontSize: "17px" }}
-            >
-              Footwear
-            </Button>
-            <Button
-              color="inherit"
-              component={Link}
-              to="/Signup"
-              sx={{ textTransform: "capitalize", fontSize: "17px" }}
-            >
-              Accessories
-            </Button> */}
           </Box>
 
           {/* Right Side - Nav Links + Icons (desktop only) */}
@@ -291,18 +249,24 @@ export default function ShoppingHeader() {
 
           {/* Mobile nav links */}
           <List>
-            {["Home", "Men", "Women", "Kids", "Footwear", "Accessories"].map(
-              (text) => (
-                <ListItem button key={text}>
-                  <ListItemText
-                    component={Link}
-                    to={text}
-                    primary={text}
-                    sx={{ textAlign: "center" }}
-                  />
-                </ListItem>
-              )
-            )}
+            {[
+              "Home",
+              "Men",
+              "Women",
+              "Kids",
+              "Footwear",
+              "Accessories",
+              "Search",
+            ].map((text) => (
+              <ListItem button key={text}>
+                <ListItemText
+                  component={Link}
+                  to={text}
+                  primary={text}
+                  sx={{ textAlign: "center" }}
+                />
+              </ListItem>
+            ))}
           </List>
 
           {/* Profile and Cart icons */}

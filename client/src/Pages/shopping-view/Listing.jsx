@@ -27,6 +27,7 @@ import {
   setproductDetails,
 } from "../../store/shop/product-slice";
 import { addToCart, fetchCartItems } from "../../store/shop/cart-slice";
+import ProductDetailDialog from "../../components/shopping-view/PRoductDetailDialog";
 
 const Listing = () => {
   const [sortMenuAnchor, setsortMenuAnchor] = useState(null);
@@ -217,167 +218,13 @@ const Listing = () => {
       )}
 
       {/* onclick  product dialog open */}
-      <Dialog
+
+      <ProductDetailDialog
         open={productPageDetailOpen}
         onClose={handleClose}
-        fullWidth
-        maxWidth="sm"
-      >
-        <DialogTitle>Product</DialogTitle>
-        <DialogContent sx={{ backgroundColor: "#f5f5f5" }}>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                sm: "1fr",
-                md: "1fr 1fr",
-              },
-              gap: 3,
-            }}
-          >
-            {/* LEFT COLUMN — IMAGE */}
-            <Box
-              sx={{
-                backgroundColor: "#fff",
-                borderRadius: 2,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                p: 2,
-              }}
-            >
-              <img
-                src={productDetails?.image}
-                alt={productDetails?.title}
-                style={{
-                  width: "100%",
-                  maxHeight: 300,
-                  objectFit: "contain",
-                }}
-              />
-            </Box>
-
-            {/* RIGHT COLUMN — DETAILS */}
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}>
-              {/* Title */}
-              <Typography variant="h6" sx={{ fontWeight: 600, color: "#111" }}>
-                {productDetails?.title}
-              </Typography>
-
-              {/* Rating */}
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <Rating value={4} readOnly size="small" />
-                <Typography variant="body2" sx={{ color: "#666" }}>
-                  (124 reviews)
-                </Typography>
-              </Box>
-
-              {/* Description */}
-              <Typography variant="body2" sx={{ color: "#555" }}>
-                {productDetails?.description}
-              </Typography>
-
-              {/* Category & Brand */}
-              <Box sx={{ display: "flex", gap: 1 }}>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    backgroundColor: "#e0e0e0",
-                    px: 1.5,
-                    py: 0.5,
-                    borderRadius: 1,
-                  }}
-                >
-                  {productDetails?.category}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    backgroundColor: "#e0e0e0",
-                    px: 1.5,
-                    py: 0.5,
-                    borderRadius: 1,
-                  }}
-                >
-                  {productDetails?.brand}
-                </Typography>
-              </Box>
-
-              {/* Price */}
-              <Box
-                sx={{ display: "flex", alignItems: "center", gap: 1, mt: 1 }}
-              >
-                <Typography variant="h6" sx={{ fontWeight: 700 }}>
-                  ₹{productDetails?.salePrice}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  sx={{ textDecoration: "line-through", color: "#888" }}
-                >
-                  ₹{productDetails?.price}
-                </Typography>
-              </Box>
-
-              {/* Stock */}
-              <Typography
-                variant="body2"
-                sx={{
-                  color: productDetails?.totalStock > 0 ? "#2e7d32" : "#c62828",
-                  fontWeight: 500,
-                }}
-              >
-                {productDetails?.totalStock > 0
-                  ? `In Stock (${productDetails?.totalStock})`
-                  : "Out of Stock"}
-              </Typography>
-            </Box>
-          </Box>
-
-          {/* REVIEWS SECTION */}
-          <Divider sx={{ my: 3 }} />
-
-          <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 1 }}>
-            Reviews
-          </Typography>
-
-          {/* Dummy Review */}
-          <Box sx={{ display: "flex", gap: 2, alignItems: "center" }}>
-            <Avatar sx={{ bgcolor: "#000" }}>
-              <PersonIcon />
-            </Avatar>
-
-            <Box>
-              <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                John Doe
-              </Typography>
-              <Typography variant="body2" sx={{ color: "#555" }}>
-                Great quality product, totally worth the price!
-              </Typography>
-            </Box>
-          </Box>
-
-          {/* ACTIONS */}
-          <DialogActions sx={{ px: 0, pt: 3 }}>
-            <Button onClick={handleClose} color="inherit">
-              Cancel
-            </Button>
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "#000",
-                "&:hover": { backgroundColor: "#333" },
-              }}
-              disabled={productDetails?.totalStock === 0}
-              onClick={() =>
-                handleAddToCart(productDetails?._id, productDetails?.totalStock)
-              }
-            >
-              Add to Cart
-            </Button>
-          </DialogActions>
-        </DialogContent>
-      </Dialog>
+        product={productDetails}
+        onAddToCart={handleAddToCart}
+      />
     </div>
   );
 };

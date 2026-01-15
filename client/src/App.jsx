@@ -24,6 +24,7 @@ import PaypalCancelPage from "./Pages/shopping-view/paypal-cancel.jsx";
 import PaypalSuccessPage from "./Pages/shopping-view/payment-success.jsx";
 import Viewprofile from "./Pages/shopping-view/Viewprofile.jsx";
 import ResetPassword from "./Pages/auth/ResetPassword.jsx";
+import SearchProducts from "./components/shopping-view/Search.jsx";
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector(
@@ -124,6 +125,7 @@ function App() {
             <Route path="paypal-cancel" element={<PaypalCancelPage />} />
             <Route path="payment-success" element={<PaypalSuccessPage />} />
             <Route path="view-profile" element={<Viewprofile />} />
+            <Route path="search" element={<SearchProducts />} />
           </Route>
           <Route path="*" element={<Notfound />} />
           <Route path="/unauth-page" element={<UnauthPage />} />
