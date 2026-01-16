@@ -18,6 +18,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InventoryIcon from "@mui/icons-material/Inventory";
 import PeopleIcon from "@mui/icons-material/People";
+import StorefrontIcon from "@mui/icons-material/Storefront";
 
 const drawerWidth = 240;
 
@@ -98,6 +99,15 @@ export default function Sidebar({ mobileOpen, onClose }) {
               <PeopleIcon />
             </ListItemIcon>
             <ListItemText primary="Users" />
+          </ListItemButton>
+        </ListItem>
+
+         <ListItem disablePadding>
+          <ListItemButton onClick={() => handleNavigate("/admin/features")}>
+            <ListItemIcon>
+              <StorefrontIcon />
+            </ListItemIcon>
+            <ListItemText primary="features" />
           </ListItemButton>
         </ListItem>
       </List>

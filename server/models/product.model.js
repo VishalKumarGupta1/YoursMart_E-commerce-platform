@@ -34,6 +34,7 @@ const productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    averageReview: Number,
   },
   { timestamps: true }
 );

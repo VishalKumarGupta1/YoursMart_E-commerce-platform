@@ -25,6 +25,7 @@ import PaypalSuccessPage from "./Pages/shopping-view/payment-success.jsx";
 import Viewprofile from "./Pages/shopping-view/Viewprofile.jsx";
 import ResetPassword from "./Pages/auth/ResetPassword.jsx";
 import SearchProducts from "./components/shopping-view/Search.jsx";
+import User from "./Pages/admin-view/User.jsx";
 
 function App() {
   const { isAuthenticated, user, isLoading } = useSelector(
@@ -104,6 +105,7 @@ function App() {
             <Route path="products" element={<Products />} />
             <Route path="orders" element={<Orders />} />
             <Route path="features" element={<Features />} />
+            <Route path="users" element={<User />} />
           </Route>
           <Route
             path="/shop"

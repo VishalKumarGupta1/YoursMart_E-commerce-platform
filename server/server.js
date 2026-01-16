@@ -16,6 +16,7 @@ import { searchRouter } from "./routes/shop/search.routes.js";
 import { productReviewRouter } from "./routes/shop/productReview.routes.js";
 import { CommonRouter } from "./routes/common/common.route.js";
 import errorHandler from "./middlewares/error.middleware.js"
+import { adminUserRouter } from "./routes/admin/admin.user.route.js";
 
 const app = express();
 
@@ -44,6 +45,9 @@ app.use("/api/v1/common/feature", CommonRouter);
 //for admin
 app.use("/api/v1/admin/products", adminproductRouter);
 app.use("/api/v1/admin/orders", adminOrderRouter);
+app.use("/api/v1/admin/Users", adminUserRouter);
+
+
 
 // Must be the last middleware
 app.use(errorHandler);

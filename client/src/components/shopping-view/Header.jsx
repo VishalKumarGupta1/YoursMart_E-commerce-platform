@@ -15,6 +15,7 @@ import {
   Menu,
   MenuItem,
   capitalize,
+  Badge,
 } from "@mui/material";
 import {
   Menu as MenuIcon,
@@ -178,7 +179,29 @@ export default function ShoppingHeader() {
             }}
           >
             <IconButton color="inherit" onClick={toggleDrawer(true)}>
-              <CartIcon />
+              <Badge
+                badgeContent={cartItems?.items?.length || 0}
+                overlap="circular"
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                sx={{
+                  "& .MuiBadge-badge": {
+                    backgroundColor: "white",
+                    color: "black",
+                    border: "1px solid black",
+                    fontSize: "0.75rem",
+                    fontWeight: "bold",
+                    minWidth: "15px",
+                    height: "18px",
+                    top: -2,
+                    right: -6,
+                  },
+                }}
+              >
+                <CartIcon />
+              </Badge>
             </IconButton>
             <IconButton color="inherit" onClick={handleProfileMenuOpen}>
               <AccountIcon />
