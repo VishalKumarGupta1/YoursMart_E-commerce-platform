@@ -17,7 +17,7 @@ import {
   fetchProductsDetails,
   setproductDetails,
 } from "../../store/shop/product-slice/index.js";
-import ProductDetailDialog from "./PRoductDetailDialog.jsx";
+import ProductDetailDialog from "./ProductDetailDialog.jsx";
 
 const SearchProducts = () => {
   const dispatch = useDispatch();
