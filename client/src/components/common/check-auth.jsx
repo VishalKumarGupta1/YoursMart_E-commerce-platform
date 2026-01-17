@@ -12,7 +12,7 @@ export function CheckAuth({ isLoading, isAuthenticated, user, children }) {
     if (!isAuthenticated) {
       return <Navigate to="/auth/login" />;
     } else {
-      if (user?.role === "admin") {
+      if (user?.role === "Admin") {
         return <Navigate to="/admin/dashboard" />;
       } else {
         return <Navigate to="/shop/home" />;
@@ -35,7 +35,7 @@ export function CheckAuth({ isLoading, isAuthenticated, user, children }) {
     (location.pathname.includes("/login") ||
       location.pathname.includes("/register"))
   ) {
-    if (user?.role === "admin") {
+    if (user?.role === "Admin") {
       return <Navigate to="/admin/dashboard" />;
     } else {
       return <Navigate to="/shop/home" />;
@@ -43,14 +43,14 @@ export function CheckAuth({ isLoading, isAuthenticated, user, children }) {
   }
   if (
     isAuthenticated &&
-    user?.role !== "admin" &&
+    user?.role !== "Admin" &&
     location.pathname.includes("/admin")
   ) {
     return <Navigate to="/unauth-page" />;
   }
   if (
     isAuthenticated &&
-    user?.role === "admin" &&
+    user?.role === "Admin" &&
     location.pathname.includes("/shop")
   ) {
     return <Navigate to="/admin/dashboard" />;
