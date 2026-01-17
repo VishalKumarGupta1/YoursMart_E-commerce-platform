@@ -170,6 +170,7 @@ export const loginUser = asynchandler(async (req, res, next) => {
       ),
       httpOnly: true, // not accessible via JS
       secure: true, // only sent over HTTPS
+      sameSite: "none",
     })
     .json(new ApiResponse(200, userData, "Login successfully"));
 });
