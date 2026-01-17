@@ -27,7 +27,7 @@ import {
   setproductDetails,
 } from "../../store/shop/product-slice";
 import { addToCart, fetchCartItems } from "../../store/shop/cart-slice";
-import ProductDetailDialog from "../../components/shopping-view/PRoductDetailDialog";
+import ProductDetailDialog from "../../components/shopping-view/ProductDetailDialog";
 
 const Listing = () => {
   const [sortMenuAnchor, setsortMenuAnchor] = useState(null);
