@@ -22,30 +22,6 @@
 
 ---
 
-## 📸 Screenshots
-
-> 📌 Upload screenshots inside a `/screenshots` folder and update paths below.
-
-### 🏠 Home Page
-![Home Page](screenshots/home.png)
-
-### 🛍️ Product Listing
-![Products](screenshots/products.png)
-
-### 🛒 Cart & Checkout
-![Cart](screenshots/cart.png)
-
-### 💳 PayPal Payment
-![Payment](screenshots/payment.png)
-
-### 👤 User Profile & Orders
-![Profile](screenshots/profile.png)
-
-### 🧑‍💼 Admin Dashboard
-![Admin Dashboard](screenshots/admin.png)
-
----
-
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -127,7 +103,46 @@
 - Cloud-based image storage
 - Automated cleanup via cron jobs
 
+
+
 ---
+
+## 📸 Screenshots
+
+### 🏠 Home Page
+<img width="1919" height="904" alt="Screenshot 2026-01-26 163234" src="https://github.com/user-attachments/assets/7ef32736-24c2-4318-b531-0084daa5dc73" />
+
+<img width="1900" height="912" alt="Screenshot 2026-01-26 163249" src="https://github.com/user-attachments/assets/eaa75971-6125-4783-b924-6bddeefd262b" />
+
+<img width="1896" height="812" alt="Screenshot 2026-01-26 163303" src="https://github.com/user-attachments/assets/f69cc019-3017-4721-8224-9ed83367a04c" />
+
+### 🛍️ Product Listing
+
+<img width="1897" height="908" alt="Screenshot 2026-01-26 163437" src="https://github.com/user-attachments/assets/fd00f5d5-0fc4-4044-9d27-eea11528797b" />
+<img width="1698" height="893" alt="Screenshot 2026-01-26 163514" src="https://github.com/user-attachments/assets/2ac31bca-f1b5-47c0-94e9-210bdefc37ef" />
+
+### 🛒 Cart & Checkout
+
+<img width="1616" height="911" alt="Screenshot 2026-01-26 163707" src="https://github.com/user-attachments/assets/5eba0ff9-eed6-4981-9581-1e478fe2b50e" />
+<img width="1916" height="905" alt="Screenshot 2026-01-26 163813" src="https://github.com/user-attachments/assets/ffeca882-7c56-44e8-a72a-04fcf51e1b7c" />
+
+
+### 👤 User Profile & Orders
+<img width="1901" height="908" alt="Screenshot 2026-01-26 163849" src="https://github.com/user-attachments/assets/b2c580f8-307c-4d98-9e17-cb9423895bd4" />
+<img width="1919" height="825" alt="Screenshot 2026-01-26 170148" src="https://github.com/user-attachments/assets/86b8ac61-21e0-4266-8d15-436821ecdb0b" />
+
+
+### 🧑‍💼 Admin Dashboard
+<img width="1897" height="906" alt="Screenshot 2026-01-26 163927" src="https://github.com/user-attachments/assets/0eb000ac-52d2-4693-bde7-e98f2024673e" />
+<img width="1899" height="896" alt="Screenshot 2026-01-26 163941" src="https://github.com/user-attachments/assets/d3b507b5-4f69-47e9-a403-791a842dd052" />
+<img width="1901" height="916" alt="Screenshot 2026-01-26 164003" src="https://github.com/user-attachments/assets/c90c2716-69b5-4715-9d82-7410f8b7a796" />
+<img width="1898" height="907" alt="Screenshot 2026-01-26 164022" src="https://github.com/user-attachments/assets/d83ae628-0383-4853-a1d3-4342ab3bc856" />
+
+
+### 🏠 Register Page
+<img width="1919" height="906" alt="Screenshot 2026-01-26 163148" src="https://github.com/user-attachments/assets/18d1b8a1-e35c-4518-89d8-827ef71744a4" />
+---
+
 
 ## ☁️ Deployment
 
