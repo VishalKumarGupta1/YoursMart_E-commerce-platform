@@ -8,6 +8,7 @@ import ProductFilter from "../../components/shopping-view/Filter";
 import ProductCard from "../../components/shopping-view/ProductCard";
 import ProductDetailDialog from "../../components/shopping-view/ProductDetailDialog";
 import { createSearchParamsHelper } from "../../Utility/Utility";
+import usePageMeta from "../../Utility/usePageMeta";
 import { toast } from "react-toastify";
 import {
   fetchAllFilteredProducts,
@@ -45,6 +46,12 @@ const Listing = () => {
 
   const { user } = useSelector((state) => state.auth);
   const { cartItems } = useSelector((state) => state.shopCart);
+
+  usePageMeta({
+    title: "Shop the Collection — YoursMart",
+    description:
+      "Browse the full YoursMart collection of fashion, electronics, beauty and home essentials. Filter by category and brand to find your next piece.",
+  });
 
   const handleSortMenuOpen = (event) => {
     setsortMenuAnchor(event.currentTarget);

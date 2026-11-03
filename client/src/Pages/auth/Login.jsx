@@ -18,10 +18,17 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { forgetPassword, loginUser } from "../../store/auth-slice";
+import usePageMeta from "../../Utility/usePageMeta";
 import { toast } from "react-toastify";
 
 const Login = () => {
   const dispatch = useDispatch();
+
+  usePageMeta({
+    title: "Sign In — YoursMart",
+    description:
+      "Sign in to your YoursMart account to track orders, manage your profile and continue shopping curated luxury essentials.",
+  });
 
   const [formData, setFormData] = React.useState({
     email: "",
