@@ -28,7 +28,7 @@ import SearchProducts from "./components/shopping-view/Search.jsx";
 import User from "./Pages/admin-view/User.jsx";
 
 function App() {
-  const { isAuthenticated, user, isLoading } = useSelector(
+  const { isAuthenticated, user, isLoading, isAuthLoading } = useSelector(
     (state) => state.auth
   );
 
@@ -72,6 +72,7 @@ function App() {
             path="/"
             element={
               <CheckAuth
+                isLoading={isAuthLoading}
                 isAuthenticated={isAuthenticated}
                 user={user}
               ></CheckAuth>
@@ -93,7 +94,7 @@ function App() {
             path="/admin"
             element={
               <CheckAuth
-                isLoading={isLoading}
+                isLoading={isAuthLoading}
                 isAuthenticated={isAuthenticated}
                 user={user}
               >
@@ -111,7 +112,7 @@ function App() {
             path="/shop"
             element={
               <CheckAuth
-                isLoading={isLoading}
+                isLoading={isAuthLoading}
                 isAuthenticated={isAuthenticated}
                 user={user}
               >

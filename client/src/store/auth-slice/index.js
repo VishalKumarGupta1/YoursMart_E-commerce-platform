@@ -4,7 +4,8 @@ import axios from "axios";
 
 const initialState = {
   isAuthenticated: false,
-  isLoading: true,
+  isLoading: false,
+  isAuthLoading: true,
   user: null,
 };
 
@@ -183,15 +184,15 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
       })
       .addCase(checkAuth.pending, (state) => {
-        state.isLoading = true;
+        state.isAuthLoading = true;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
-        state.isLoading = false;
+        state.isAuthLoading = false;
         state.user = action?.payload?.data;
         state.isAuthenticated = true;
       })
       .addCase(checkAuth.rejected, (state, action) => {
-        state.isLoading = false;
+        state.isAuthLoading = false;
         state.user = null;
         state.isAuthenticated = false;
       })
