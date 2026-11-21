@@ -18,10 +18,17 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link as RouterLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { forgetPassword, loginUser } from "../../store/auth-slice";
+import usePageMeta from "../../Utility/usePageMeta";
 import { toast } from "react-toastify";
 
 const Login = () => {
   const dispatch = useDispatch();
+
+  usePageMeta({
+    title: "Sign In — YoursMart",
+    description:
+      "Sign in to your YoursMart account to track orders, manage your profile and continue shopping curated luxury essentials.",
+  });
 
   const [formData, setFormData] = React.useState({
     email: "",
@@ -129,8 +136,14 @@ const Login = () => {
           </Box>
 
           {/* Submit Button */}
-          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3 }}>
-            Login
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            disabled={isLoading}
+            sx={{ mt: 3 }}
+          >
+            {isLoading ? "Signing in..." : "Login"}
           </Button>
 
           {/* Create Account */}
@@ -167,8 +180,12 @@ const Login = () => {
 
         <DialogActions>
           <Button onClick={() => setOpenForgot(false)}>Cancel</Button>
-          <Button variant="contained" onClick={handleForgotPassword}>
-            Send Reset Link
+          <Button
+            variant="contained"
+            onClick={handleForgotPassword}
+            disabled={isLoading}
+          >
+            {isLoading ? "Sending..." : "Send Reset Link"}
           </Button>
         </DialogActions>
       </Dialog>

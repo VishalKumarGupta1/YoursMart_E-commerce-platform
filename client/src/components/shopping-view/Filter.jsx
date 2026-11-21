@@ -1,171 +1,142 @@
-import * as React from "react";
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Chip from "@mui/material/Chip";
+import { useEffect, useState } from "react";
+import CheckIcon from "@mui/icons-material/Check";
+import TuneIcon from "@mui/icons-material/Tune";
 import { brands, categories } from "../../Utility/Constant";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import { useLocation } from "react-router-dom";
 
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
+const FilterGroup = ({ title, options, selected, onToggle }) => (
+  <div className="border-t border-line py-5 first:border-t-0 first:pt-0">
+    <div className="flex items-baseline justify-between">
+      <h3 className="text-[10px] uppercase tracking-[0.28em] text-ink">
+        {title}
+      </h3>
+      <span className="text-[10px] text-stone">{selected.length}</span>
+    </div>
 
-function getStyles(name, category, theme) {
-  return {
-    fontWeight: category.includes(name)
-      ? theme.typography.fontWeightMedium
-      : theme.typography.fontWeightRegular,
-  };
-}
+    <div className="lux-scroll mt-3 max-h-64 space-y-0.5 overflow-y-auto pr-2">
+      {options.map((name) => (
+        <label
+          key={name}
+          className="group flex cursor-pointer items-center gap-3 py-2"
+        >
+          <input
+            type="checkbox"
+            checked={selected.includes(name)}
+            onChange={() => onToggle(name)}
+            className="peer sr-only"
+          />
+          <span className="flex h-4 w-4 shrink-0 items-center justify-center border border-line bg-white text-transparent transition-colors duration-200 peer-checked:border-ink peer-checked:bg-ink peer-checked:text-ivory peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-champagne">
+            <CheckIcon sx={{ fontSize: 11 }} />
+          </span>
+          <span className="text-sm text-stone transition-colors duration-200 peer-checked:text-ink group-hover:text-ink">
+            {name}
+          </span>
+        </label>
+      ))}
+    </div>
+  </div>
+);
 
 const ProductFilter = ({ filter, setFilter }) => {
-  const theme = useTheme();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const selectedCategories = filter?.category || [];
+  const selectedBrands = filter?.brand || [];
+  const activeCount = selectedCategories.length + selectedBrands.length;
 
-  const location = useLocation();
-
-  React.useEffect(() => {
-    sessionStorage.setItem("filters", JSON.stringify(filter));
+  useEffect(() => {
+    if (filter) {
+      sessionStorage.setItem("filters", JSON.stringify(filter));
+    }
   }, [filter]);
 
-  // React.useEffect(() => {
-  //   const storedFilters = sessionStorage.getItem("filters");
-  //   if (storedFilters) {
-  //     setFilter(JSON.parse(storedFilters));
-  //   }
-  // }, [location.pathname]);
-
-  const handleFilterChange = (key) => (event) => {
-    const {
-      target: { value },
-    } = event;
-
-    setFilter((prev) => ({
-      ...prev,
-      [key]: typeof value === "string" ? value.split(",") : value,
-    }));
-    // sessionStorage.setItem("filters", JSON.stringify(filter));
+  const handleToggle = (key, value) => {
+    setFilter((prev) => {
+      const safePrev = prev || { category: [], brand: [] };
+      const current = safePrev[key] || [];
+      return {
+        ...safePrev,
+        [key]: current.includes(value)
+          ? current.filter((item) => item !== value)
+          : [...current, value],
+      };
+    });
   };
 
-  return (
-    <div className="flex flex-col items-center p-4 border border-gray-400 rounded-md ">
-      <div className="flex justify-center h-30 w-full items-center">
-        <h2 className="text-3xl underline-offset-auto font-semibold text-gray-800l">
-          Filter
-        </h2>
-      </div>
-      <Divider sx={{ width: "100%" }} />
-      <FormControl sx={{ m: 1, width: 250, mt: 5 }}>
-        <InputLabel
-          id="demo-multiple-chip-label"
-          sx={{
-            "&.Mui-focused": {
-              color: "#2d2d2d", // label color on focus
-            },
-          }}
-        >
-          Category
-        </InputLabel>
-        <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          multiple
-          rows={4}
-          value={filter.category}
-          onChange={handleFilterChange("category")}
-          input={
-            <OutlinedInput
-              id="select-multiple-chip"
-              label="Category"
-              sx={{
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#2d2d2d", // border color on focus
-                },
-              }}
-            />
-          }
-          renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
-            </Box>
-          )}
-          MenuProps={MenuProps}
-        >
-          {categories.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, filter.category, theme)}
-            >
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+  const handleClear = () => setFilter({ category: [], brand: [] });
 
-      <FormControl sx={{ m: 1, width: 250, mt: 5 }}>
-        <InputLabel
-          id="demo-multiple-chip-label"
-          sx={{
-            "&.Mui-focused": {
-              color: "#2d2d2d", // label color on focus
-            },
-          }}
-        >
-          Brand
-        </InputLabel>
-        <Select
-          labelId="demo-multiple-chip-label"
-          id="demo-multiple-chip"
-          multiple
-          rows={4}
-          value={filter.brand}
-          onChange={handleFilterChange("brand")}
-          input={
-            <OutlinedInput
-              id="select-multiple-chip"
-              label="Brand"
-              sx={{
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#2d2d2d", // border color on focus
-                },
-              }}
-            />
-          }
-          renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
-            </Box>
+  return (
+    <div className="lg:sticky lg:top-24">
+      <button
+        type="button"
+        onClick={() => setMobileOpen((prev) => !prev)}
+        aria-expanded={mobileOpen}
+        className="flex w-full items-center justify-between border border-line bg-white px-5 py-4 lg:hidden"
+      >
+        <span className="flex items-center gap-2 text-[10px] uppercase tracking-[0.25em] text-ink">
+          <TuneIcon sx={{ fontSize: 16 }} />
+          Filters
+        </span>
+        <span className="flex items-center gap-2">
+          {activeCount > 0 && (
+            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-ink px-1.5 text-[10px] text-ivory">
+              {activeCount}
+            </span>
           )}
-          MenuProps={MenuProps}
-        >
-          {brands.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, filter.brand, theme)}
+          <span className="text-[10px] uppercase tracking-[0.2em] text-stone">
+            {mobileOpen ? "Hide" : "Show"}
+          </span>
+        </span>
+      </button>
+
+      <div
+        className={`mt-4 border border-line bg-white p-6 lg:mt-0 lg:block ${
+          mobileOpen ? "block" : "hidden"
+        }`}
+      >
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h2 className="font-display text-2xl leading-none text-ink">
+              Refine
+            </h2>
+            <p className="mt-2 text-xs text-stone">
+              {activeCount > 0
+                ? `${activeCount} filter${activeCount > 1 ? "s" : ""} applied`
+                : "Narrow the edit"}
+            </p>
+          </div>
+          {activeCount > 0 && (
+            <button
+              type="button"
+              onClick={handleClear}
+              className="border-b border-ink pb-0.5 text-[9px] uppercase tracking-[0.22em] text-ink transition-colors hover:text-burgundy"
             >
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+              Clear
+            </button>
+          )}
+        </div>
+
+        <div className="mt-6">
+          <FilterGroup
+            title="Category"
+            options={categories}
+            selected={selectedCategories}
+            onToggle={(value) => handleToggle("category", value)}
+          />
+          <FilterGroup
+            title="Brand"
+            options={brands}
+            selected={selectedBrands}
+            onToggle={(value) => handleToggle("brand", value)}
+          />
+        </div>
+
+        <div className="border-t border-line pt-5">
+          <p className="font-display text-lg text-ink">Personal styling</p>
+          <p className="mt-2 text-xs leading-relaxed text-stone">
+            Unsure where to begin? Our stylists can help you find the right
+            piece for the occasion.
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
