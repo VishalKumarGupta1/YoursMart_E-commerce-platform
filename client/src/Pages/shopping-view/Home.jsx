@@ -10,6 +10,7 @@ import AutorenewIcon from "@mui/icons-material/Autorenew";
 import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import { categoriesWithIcon, topBrands } from "../../Utility/Constant";
+import usePageMeta from "../../Utility/usePageMeta";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllFilteredProducts } from "../../store/shop/product-slice";
 import ProductCard from "../../components/shopping-view/ProductCard";
@@ -18,6 +19,12 @@ import { toast } from "react-toastify";
 import { addToCart, fetchCartItems } from "../../store/shop/cart-slice";
 
 const slides = [image1, image2, image3];
+
+const slideAlts = [
+  "The YoursMart autumn edit — curated fashion and lifestyle essentials",
+  "Considered everyday style from the YoursMart collection",
+  "YoursMart lookbook — modern luxury pieces worth keeping",
+];
 
 const promises = [
   {
@@ -99,6 +106,12 @@ const SectionHeading = ({
 const Home = () => {
   const [current, setCurrent] = useState(0);
   const dispatch = useDispatch();
+
+  usePageMeta({
+    title: "YoursMart — Modern Luxury, Considered",
+    description:
+      "Shop curated fashion, electronics, beauty and home essentials at YoursMart. Considered design and enduring style, delivered with complimentary shipping over ₹999.",
+  });
   const navigate = useNavigate();
   const { productList } = useSelector((state) => state.shopProducts);
   const { user } = useSelector((state) => state.auth);
@@ -160,7 +173,7 @@ const Home = () => {
             <img
               key={index}
               src={slide}
-              alt=""
+              alt={slideAlts[index]}
               aria-hidden={index !== current}
               className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-[1200ms] ease-out ${
                 index === current ? "opacity-100" : "opacity-0"
@@ -438,6 +451,7 @@ const Home = () => {
             <img
               src={image2}
               alt="The everyday icon lookbook"
+              loading="lazy"
               className="absolute inset-0 h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-ink/15" />
