@@ -14,7 +14,6 @@ import {
   ListItemText,
   Menu,
   MenuItem,
-  capitalize,
   Badge,
 } from "@mui/material";
 import {
@@ -39,7 +38,7 @@ export default function ShoppingHeader() {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const loaction = useLocation();
-  const [searchParams, setsearchParams] = useSearchParams();
+  const [, setsearchParams] = useSearchParams();
 
   useEffect(() => {
     dispatch(fetchCartItems(user?._id));
@@ -97,29 +96,40 @@ export default function ShoppingHeader() {
   return (
     <>
       {/* Top Navbar */}
-      <AppBar position="sticky" sx={{ backgroundColor: "#2d2d2d", p: 1 }}>
+      <AppBar
+        position="sticky"
+        elevation={0}
+        sx={{
+          backgroundColor: "#141210",
+          borderBottom: "1px solid rgba(217,196,156,0.16)",
+          px: { xs: 1, md: 2 },
+        }}
+      >
         <Toolbar
           sx={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            minHeight: { xs: 64, md: 76 },
           }}
         >
           {/* Left Side - Brand Name */}
           <Typography
             variant="h5"
             sx={{
-              fontWeight: "bold",
-              color: "#fff",
+              fontWeight: 500,
+              color: "#f6f1e8",
               flexShrink: 0,
               cursor: "pointer",
               textDecoration: "none",
-              fontFamily: "cursive",
+              fontFamily: '"Bodoni Moda", serif',
+              letterSpacing: "0.14em",
+              fontSize: { xs: "1.35rem", md: "1.6rem" },
             }}
             component={Link}
             to="/shop/home"
           >
-            YoursMart
+            YOURSMART
           </Typography>
 
           {/* Middle - Search Bar (visible on all devices) */}
@@ -136,7 +146,14 @@ export default function ShoppingHeader() {
               color="inherit"
               component={Link}
               to="/shop/home"
-              sx={{ textTransform: "capitalize", fontSize: "17px" }}
+              sx={{
+                  textTransform: "uppercase",
+                  fontSize: "10px",
+                  letterSpacing: "0.22em",
+                  color: "rgba(246,241,232,0.72)",
+                  px: 1.4,
+                  "&:hover": { color: "#d9c49c", backgroundColor: "transparent" },
+                }}
             >
               Home
             </Button>
@@ -144,7 +161,14 @@ export default function ShoppingHeader() {
               color="inherit"
               component={Link}
               to="/shop/listing"
-              sx={{ textTransform: "capitalize", fontSize: "17px" }}
+              sx={{
+                  textTransform: "uppercase",
+                  fontSize: "10px",
+                  letterSpacing: "0.22em",
+                  color: "rgba(246,241,232,0.72)",
+                  px: 1.4,
+                  "&:hover": { color: "#d9c49c", backgroundColor: "transparent" },
+                }}
             >
               Products
             </Button>
@@ -154,7 +178,14 @@ export default function ShoppingHeader() {
                   key={index}
                   color="inherit"
                   onClick={() => handleNavigateToListingPage(text, "category")}
-                  sx={{ textTransform: "capitalize", fontSize: "17px" }}
+                  sx={{
+                  textTransform: "uppercase",
+                  fontSize: "10px",
+                  letterSpacing: "0.22em",
+                  color: "rgba(246,241,232,0.72)",
+                  px: 1.4,
+                  "&:hover": { color: "#d9c49c", backgroundColor: "transparent" },
+                }}
                 >
                   {text}
                 </Button>
@@ -164,7 +195,14 @@ export default function ShoppingHeader() {
               color="inherit"
               component={Link}
               to="/shop/search"
-              sx={{ textTransform: "capitalize", fontSize: "17px" }}
+              sx={{
+                  textTransform: "uppercase",
+                  fontSize: "10px",
+                  letterSpacing: "0.22em",
+                  color: "rgba(246,241,232,0.72)",
+                  px: 1.4,
+                  "&:hover": { color: "#d9c49c", backgroundColor: "transparent" },
+                }}
             >
               Search
             </Button>
@@ -188,13 +226,13 @@ export default function ShoppingHeader() {
                 }}
                 sx={{
                   "& .MuiBadge-badge": {
-                    backgroundColor: "white",
-                    color: "black",
-                    border: "1px solid black",
-                    fontSize: "0.75rem",
-                    fontWeight: "bold",
-                    minWidth: "15px",
-                    height: "18px",
+                    backgroundColor: "#b9985a",
+                    color: "#141210",
+                    border: "1px solid #141210",
+                    fontSize: "0.65rem",
+                    fontWeight: 600,
+                    minWidth: "16px",
+                    height: "16px",
                     top: -2,
                     right: -6,
                   },
@@ -257,39 +295,78 @@ export default function ShoppingHeader() {
         open={isMobileMenuOpen}
         onClose={toggleMobileMenu}
         PaperProps={{
-          sx: { backgroundColor: "#2d2d2d", color: "#fff", width: "70%" },
+          sx: {
+            backgroundColor: "#141210",
+            color: "#f6f1e8",
+            width: "78%",
+            borderRight: "1px solid rgba(217,196,156,0.16)",
+          },
         }}
       >
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 3 }}>
           <Typography
             variant="h6"
-            sx={{ fontWeight: "bold", mb: 2, textAlign: "center" }}
+            sx={{
+              fontFamily: '"Bodoni Moda", serif',
+              letterSpacing: "0.14em",
+              fontWeight: 500,
+              mb: 3,
+              textAlign: "center",
+              color: "#f6f1e8",
+              textDecoration: "none",
+            }}
             component={Link}
             to="/shop/home"
+            onClick={toggleMobileMenu}
           >
-            YourSmart
+            YOURSMART
           </Typography>
 
           {/* Mobile nav links */}
           <List>
-            {[
-              "Home",
-              "Men",
-              "Women",
-              "Kids",
-              "Footwear",
-              "Accessories",
-              "Search",
-            ].map((text) => (
-              <ListItem button key={text}>
-                <ListItemText
-                  component={Link}
-                  to={text}
-                  primary={text}
-                  sx={{ textAlign: "center" }}
-                />
-              </ListItem>
-            ))}
+            {["Home", "Men", "Women", "Kids", "Footwear", "Accessories", "Search"].map(
+              (text) => (
+                <ListItem key={text} disablePadding>
+                  {text === "Home" || text === "Search" ? (
+                    <ListItemText
+                      component={Link}
+                      to={text === "Home" ? "/shop/home" : "/shop/search"}
+                      onClick={toggleMobileMenu}
+                      primary={text}
+                      sx={{
+                        textAlign: "center",
+                        py: 1.5,
+                        borderBottom: "1px solid rgba(246,241,232,0.08)",
+                        "& .MuiListItemText-primary": {
+                          fontSize: 11,
+                          letterSpacing: "0.24em",
+                          textTransform: "uppercase",
+                        },
+                      }}
+                    />
+                  ) : (
+                    <ListItemText
+                      onClick={() => {
+                        handleNavigateToListingPage(text, "category");
+                        toggleMobileMenu();
+                      }}
+                      primary={text}
+                      sx={{
+                        textAlign: "center",
+                        py: 1.5,
+                        cursor: "pointer",
+                        borderBottom: "1px solid rgba(246,241,232,0.08)",
+                        "& .MuiListItemText-primary": {
+                          fontSize: 11,
+                          letterSpacing: "0.24em",
+                          textTransform: "uppercase",
+                        },
+                      }}
+                    />
+                  )}
+                </ListItem>
+              )
+            )}
           </List>
 
           {/* Profile and Cart icons */}
